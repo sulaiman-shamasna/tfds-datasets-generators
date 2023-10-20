@@ -19,8 +19,8 @@ git clone https://github.com/sulaiman-shamasna/tfds-datasets-generators.git
 ```
 2. Create a virtual environment and activate it using the commands:
 ```py
-- Source env/Scripte activate # for Windows in the git bash
-- Source env/bin/activate # for Linux and OSX
+- Source env/Scripte/activate   # for Windows in the git bash
+- Source env/bin/activate       # for Linux and OSX
 ```
 3. Install the necessary requirements using the command:
 ```py
