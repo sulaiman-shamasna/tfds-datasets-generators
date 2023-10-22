@@ -1,13 +1,15 @@
 import tensorflow_datasets as tfds
 import tensorflow as tf
 import os
-import ffmpeg
+# import ffmpeg
+from pydub import AudioSegment
+
 import glob
 from typing import Dict, Any, Generator
 
 def convert_to_mp3(file_path: str) -> bytes:
     """
-    Converts a WAV audio file to MP3 format.
+    Converts a WAV audio file to MP3 format using pydub.
 
     Args:
         file_path (str): Path to the input WAV audio file.
@@ -15,14 +17,9 @@ def convert_to_mp3(file_path: str) -> bytes:
     Returns:
         bytes: Binary MP3 audio data.
     """
-    out, _ = (
-        ffmpeg.input(file_path)
-        .output(
-            "pipe:", ac=1, ar=16000, format="mp3", acodec="mp3", audio_bitrate="128k"
-        )
-        .run(capture_stdout=True, quiet=True)
-    )
-    return out
+    audio = AudioSegment.from_wav(file_path)
+    mp3_audio = audio.export(format="mp3").read()
+    return mp3_audio
 
 class FSDNoisy18k(tfds.core.GeneratorBasedBuilder):
     VERSION = tfds.core.Version('1.0.0')
