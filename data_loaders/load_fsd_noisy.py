@@ -12,5 +12,5 @@ def decoding(audio):
     return audio
 
 ds = tfds.load("fsd_noisy18k", split="train").map(decoding)
-for i in ds.take(3):
+for i in ds.take(5):
     print("---->\n", i['audio'])
