@@ -27,7 +27,7 @@ def convert_to_mp3(file_path: str) -> bytes:
     mp3_audio = audio.export(format="mp3").read()
     return mp3_audio
 
-class ESC50Master(tfds.core.GeneratorBasedBuilder):
+class ESC_50(tfds.core.GeneratorBasedBuilder):
 
     VERSION = tfds.core.Version('1.0.0')
     RELEASE_NOTES = {
@@ -39,7 +39,7 @@ class ESC50Master(tfds.core.GeneratorBasedBuilder):
             builder=self,
             features=tfds.features.FeaturesDict(
                 {
-                    "audio": tfds.features.Audio(file_format="mp3"),
+                    "audio": tfds.features.Text(),
                     "label": tfds.features.ClassLabel(names=class_labels),
                     "metadata": {
                         "version": tfds.features.Text(),
@@ -71,7 +71,7 @@ class ESC50Master(tfds.core.GeneratorBasedBuilder):
                     is_first = False
                     continue
                 line = line.strip()
-                key, category, _, _, _, _, _ = line.split(",")
+                key, _, _, category, _, _, _ = line.split(",")
                 file_path = os.path.join(
                     directory, "ESC-50-master", "audio", key
                 )
@@ -80,7 +80,6 @@ class ESC50Master(tfds.core.GeneratorBasedBuilder):
                 metadata = {
                     "version": "1.0.0",
                     "description": "ESC-50 custom dataset with metadata",
-                    "num_classes": len(class_labels),
                 }
                 yield key, {
                     "audio": out,
